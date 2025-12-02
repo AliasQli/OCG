@@ -17,8 +17,8 @@ namespace VRCOCG
 
         void Start()
         {
-            side = gameObject.GetComponentInParent<Side>();
-            renderer = gameObject.GetComponent<Renderer>();
+            side = GetComponentInParent<Side>();
+            renderer = GetComponent<Renderer>();
             if (position == -1)
             {
                 position = stack.DefaultPosition();
@@ -28,7 +28,7 @@ namespace VRCOCG
         void OnTriggerEnter([NotNull] Collider other)
         {
             Debug.Log("[StackInserterUX] OnTriggerEnter");
-            var cardUX = other.gameObject.GetComponent<CardUX>();
+            var cardUX = other.GetComponent<CardUX>();
             if (cardUX == null) return;
             if (cardUX.card.side != side) return;
             if (cardUX.collidingStackInserter != null) return;
@@ -39,7 +39,7 @@ namespace VRCOCG
         void OnTriggerExit([NotNull] Collider other)
         {
             Debug.Log("[StackInserterUX] OnTriggerExit");
-            var cardUX = other.gameObject.GetComponent<CardUX>();
+            var cardUX = other.GetComponent<CardUX>();
             if (cardUX == null) return;
             if (cardUX.card.side != side) return;
             if (cardUX.collidingStackInserter != this) return;

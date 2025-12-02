@@ -19,10 +19,11 @@ Shader "OCG/Card"
         // _HasIcon ("Has Icon", Integer) = 0
         _Arrow ("Arrow", Integer) = -1
         _IsPendulum ("Is Pendulum", Integer) = 0
+        _DoubleFace ("Double Face", Integer) = 0
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags { "RenderType" = "Opaque" "Queue"="Geometry" }
         LOD 100
 
         Pass
@@ -106,6 +107,7 @@ Shader "OCG/Card"
             int _Level;
             int _Arrow;
             int _IsPendulum;
+            int _DoubleFace;
 
             v2f vert (appdata v)
             {
@@ -120,8 +122,11 @@ Shader "OCG/Card"
                 static const float2 cardSize = float2(CARD_W, CARD_H);
 
                 if (facing <= 0) {
-                    // back side, mirror
-                    return REVERSE_SAMPLE(float2(1 - i.uv.x, i.uv.y), _BackTex);
+                    i.uv.x = 1 - i.uv.x;
+                    if (_DoubleFace == 0) {
+                        // back side, mirror
+                        return REVERSE_SAMPLE(i.uv, _BackTex);
+                    }
                 }
 
                 float4 baseColor = REVERSE_SAMPLE(i.uv, _BaseTex);

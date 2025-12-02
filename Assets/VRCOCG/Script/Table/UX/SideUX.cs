@@ -9,7 +9,6 @@ namespace VRCOCG
 {
     public class SideUX : UdonSharpBehaviour
     {
-        public VRCUrlInputField field;
         public Side side;
 
         public void OnLoadDeck()

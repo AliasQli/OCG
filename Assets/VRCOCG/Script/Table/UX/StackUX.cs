@@ -8,46 +8,43 @@ namespace VRCOCG
 {
     public class StackUX : UdonSharpBehaviour
     {
-        public GameObject plane;
+        public GameObject panel;
         private Stack stack;
         private Side side;
-        private CardPool cardPool;
+        private CardRegistry cardRegistry;
         private Card[] dispCards = new Card[0];
 
         [SerializeField] private Transform DrawPos;
         [SerializeField] private Transform CardOffset;
+        [SerializeField] private Transform CardOffsetBase;
         [SerializeField] private Transform BasePos;
 
-        private Vector3 drawOffset;
+        private Vector3 drawPos;
         private Vector3 cardOffset;
         private Vector3 basePos;
+        private Quaternion cardRot; // TODO
 
         void Start()
         {
-            stack = gameObject.GetComponentInParent<Stack>();
-            side = gameObject.GetComponentInParent<Side>();
-            var table = gameObject.GetComponentInParent<Table>();
-            cardPool = table.cardPool;
+            stack = GetComponentInParent<Stack>();
+            side = GetComponentInParent<Side>();
+            cardRegistry = side.cardRegistry;
 
-            drawOffset = DrawPos.localPosition;
-            cardOffset = CardOffset.localPosition;
+            drawPos = DrawPos.position;
+            cardOffset = CardOffset.position - CardOffsetBase.position;
             basePos = BasePos.position + cardOffset * 0.5f;
+            cardRot = Quaternion.Euler(180, 180, 0) * panel.transform.rotation;
         }
 
         public void ClosePanel(Card by = null)
         {
-            if (!plane.activeSelf) return;
-            plane.SetActive(false);
+            if (!panel.activeSelf) return;
+            panel.SetActive(false);
             foreach (var c in dispCards)
             {
                 if (c != by)
                 {
-                    if (c == null)
-                    {
-                        Debug.LogWarning("[StackUX] ClosePanel: dispCards contains null");
-                        continue;
-                    }
-                    cardPool.Destroy(c);
+                    cardRegistry.Unregister(c);
                 }
             }
             dispCards = new Card[0];
@@ -55,13 +52,13 @@ namespace VRCOCG
 
         public override void Interact()
         {
-            if (plane.activeSelf)
+            if (panel.activeSelf)
             {
                 ClosePanel();
                 return;
             }
 
-            plane.SetActive(true);
+            panel.SetActive(true);
             var cards = stack.cards.DeepClone();
             cards.Sort();
             const int width = 12;
@@ -70,11 +67,10 @@ namespace VRCOCG
             {
                 int w = i % width;
                 int h = i / width;
-                var card = cardPool.New(cards[i].AsInt(), side);
+                var card = cardRegistry.New(cards[i].AsInt(), side);
                 dispCards[i] = card;
                 var pos = basePos + new Vector3(w * cardOffset.x, h * cardOffset.y, 0);
-                var rot = side.cardRot;
-                card.gameObject.transform.SetPositionAndRotation(pos, rot); // FIX: null
+                card.gameObject.transform.SetPositionAndRotation(pos, cardRot);
                 card.cardUX.fromStack = stack;
             }
         }
@@ -83,11 +79,23 @@ namespace VRCOCG
         {
             int code = stack.DrawCard(p);
             if (code == -1) return;
-            var card = cardPool.New(code, side);
-            var pos = gameObject.transform.position + drawOffset;
-            var rot = side.cardRot;
-            card.gameObject.transform.SetPositionAndRotation(pos, rot);
+            var card = cardRegistry.New(code, side);
             card.ConfirmMove();
+            ClosePanel();
+        }
+
+        public void OnDraw5()
+        {
+            for (int i = -2; i <= 2; i++)
+            {
+                int code = stack.DrawCard(Stack.POS_TOP);
+                if (code == -1) return;
+                var card = cardRegistry.New(code, side);
+                var pos = drawPos + new Vector3(i * cardOffset.x, 0, 0);
+                card.gameObject.transform.SetPositionAndRotation(pos, cardRot);
+                card.ConfirmMove();
+            }
+            
             ClosePanel();
         }
 

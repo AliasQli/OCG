@@ -37,7 +37,7 @@ namespace VRCOCG
 
         void Start()
         {
-            stackUX = gameObject.GetComponentInChildren<StackUX>();
+            stackUX = GetComponentInChildren<StackUX>();
         }
 
         public void ClearCards()
@@ -110,7 +110,7 @@ namespace VRCOCG
         {
             if (VRCJson.TrySerializeToJson(cards, JsonExportType.Minify, out DataToken data))
             {
-                SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SyncEvent), DateTime.UtcNow.ToFileTimeUtc(), data.String);
+                SendCustomNetworkEvent(NetworkEventTarget.Others, nameof(SyncEvent), DateTime.UtcNow.ToFileTimeUtc(), data.String);
             }
             else
             {
