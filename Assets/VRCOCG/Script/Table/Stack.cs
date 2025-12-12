@@ -33,11 +33,31 @@ namespace VRCOCG
         }
 
         [NonSerialized] public DataList cards = new DataList();
-        private long timestamp = DateTime.UtcNow.ToFileTimeUtc();
+        private long timestamp = 0;
 
         void Start()
         {
             stackUX = GetComponentInChildren<StackUX>();
+        }
+
+        public DataDictionary Serialize()
+        {
+            var data = new DataDictionary();
+            data["ts"] = $"{timestamp}";
+            data["cards"] = cards;
+            return data;
+        }
+
+        public void Deserialize(DataDictionary data)
+        {
+            if (data == null) return;
+            if (data.TryGetValue("ts", TokenType.String, out DataToken tsToken) &&
+                data.TryGetValue("cards", TokenType.DataList, out DataToken cardsToken))
+            {
+                long newTimestamp = long.Parse(tsToken.String);
+                if (!timestamp.VerifyTimestamp(newTimestamp)) return;
+                cards = cardsToken.DataList;
+            }
         }
 
         public void ClearCards()
@@ -59,7 +79,7 @@ namespace VRCOCG
             }
             else
             {
-                cards.Add(code);
+                cards.Add((double)code);
                 if (pos == POS_RANDOM)
                 {
                     cards.Shuffle();
@@ -124,10 +144,9 @@ namespace VRCOCG
         [NetworkCallable]
         public void SyncEvent(long newTimeStamp, string json)
         {
-            if (newTimeStamp <= timestamp) return;
             if (VRCJson.TryDeserializeFromJson(json, out DataToken data))
             {
-                timestamp = newTimeStamp;
+                if (!timestamp.VerifyTimestamp(newTimeStamp)) return;
                 cards = data.DataList;
             }
             else

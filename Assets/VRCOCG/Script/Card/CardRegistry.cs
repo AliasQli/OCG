@@ -10,30 +10,104 @@ namespace VRCOCG
     {
         [NonSerialized] public DataDictionary dict = new DataDictionary();
         private CardPool pool;
-        private long timestamp = DateTime.UtcNow.ToFileTimeUtc();
+        private Side side;
+        private long timestamp = 0;
 
         void Start()
         {
             pool = GetComponentInParent<Table>().cardPool;
+            side = GetComponentInParent<Side>();
         }
 
-        public Card GetOrNew(string uid, int code, Side side)
+        public DataDictionary Serialize()
+        {
+            var cardsDict = new DataDictionary();
+            var keys = dict.GetKeys();
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var key = keys[i];
+                var card = (Card)dict[key].Reference;
+                var cardData = new DataDictionary();
+                cardData["ts"] = $"{card.timestamp}";
+                cardData["uid"] = card.uid;
+                cardData["code"] = card.code;
+                card.transform.GetPositionAndRotation(out var pos, out var rot);
+                cardData["posx"] = pos.x;
+                cardData["posy"] = pos.y;
+                cardData["posz"] = pos.z;
+                cardData["rotx"] = rot.x;
+                cardData["roty"] = rot.y;
+                cardData["rotz"] = rot.z;
+                cardData["rotw"] = rot.w;
+                cardsDict[key] = cardData;
+            }
+            var data = new DataDictionary();
+            data["ts"] = $"{timestamp}";
+            data["cards"] = cardsDict;
+            return data;
+        }
+
+        public void Deserialize(DataDictionary data)
+        {
+            if (data == null) return;
+            if (data.TryGetValue("ts", TokenType.String, out DataToken tsToken) &&
+                data.TryGetValue("cards", TokenType.DataDictionary, out DataToken cardsToken))
+            {
+                long newTimestamp = long.Parse(tsToken.String);
+                if (!timestamp.VerifyTimestamp(newTimestamp)) return;
+
+                var cardsDict = cardsToken.DataDictionary;
+                var keys = cardsDict.GetKeys();
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    var key = keys[i].String;
+                    var cardData = cardsDict[key].DataDictionary;
+                    string uid = cardData["uid"].String;
+                    int code = cardData["code"].AsInt();
+                    long cardTs = long.Parse(cardData["ts"].String);
+                    var card = GetOrNew(uid, code);
+                    if (!card.timestamp.VerifyTimestamp(cardTs)) continue;
+                    float posx = (float)cardData["posx"].Number;
+                    float posy = (float)cardData["posy"].Number;
+                    float posz = (float)cardData["posz"].Number;
+                    float rotx = (float)cardData["rotx"].Number;
+                    float roty = (float)cardData["roty"].Number;
+                    float rotz = (float)cardData["rotz"].Number;
+                    float rotw = (float)cardData["rotw"].Number;
+                    card.transform.SetPositionAndRotation(
+                        new Vector3(posx, posy, posz),
+                        new Quaternion(rotx, roty, rotz, rotw));
+                }
+
+                keys = dict.GetKeys();
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    var key = keys[i].String;
+                    if (!cardsDict.ContainsKey(key))
+                    {
+                        UnregisterByUid(key);
+                    }
+                }
+            }
+        }
+
+        public Card GetOrNew(string uid, int code)
         {
             var card = TryGet(uid);
             if (card == null)
             {
-                card = pool.New(code, side);
+                card = pool.New(code, uid, side);
                 dict.Add(uid, card);
                 timestamp = DateTime.UtcNow.ToFileTimeUtc();
             }
             return card;
         }
 
-        public Card New(int code, Side side)
+        public Card New(int code, int i = 0)
         {
-            string uid = Helper.GenerateId(pool.prefab.name);
-            var card = pool.New(code, side);
-            card.uid = uid;
+            string uid = Helper.GenerateId(pool.prefab.name, i);
+            var card = pool.New(code, uid, side);
+            card.timestamp = DateTime.UtcNow.ToFileTimeUtc();
             dict.Add(uid, card);
             timestamp = DateTime.UtcNow.ToFileTimeUtc();
             return card;
@@ -41,10 +115,13 @@ namespace VRCOCG
 
         public void Unregister(Card card)
         {
-            if (!dict.Remove(card.uid))
+            if (dict.Remove(card.uid))
+            {
+                timestamp = DateTime.UtcNow.ToFileTimeUtc();
+            }
+            else
             {
                 Debug.LogWarning($"[CardRegistry] Unregister: Card {card.uid} not found");
-                timestamp = DateTime.UtcNow.ToFileTimeUtc();
             }
             pool.Recycle(card);
         }
@@ -66,11 +143,7 @@ namespace VRCOCG
         [NetworkCallable]
         public void UnregisterAll(long newTimestamp)
         {
-            if (timestamp >= newTimestamp)
-            {
-                return;
-            }
-            timestamp = newTimestamp;
+            if (!timestamp.VerifyTimestamp(newTimestamp)) return;
             var cards = dict.GetValues();
             Debug.Log($"[CardRegistry] UnregisterAll (has {cards.Count})");
             for (int i = 0; i < cards.Count; i++)
@@ -82,11 +155,10 @@ namespace VRCOCG
 
         public void Load(string json, long newTimestamp)
         {
-            if (timestamp >= newTimestamp) return;
             if (VRCJson.TryDeserializeFromJson(json, out var newDict))
             {
+                if (!timestamp.VerifyTimestamp(newTimestamp)) return;
                 dict = newDict.DataDictionary;
-                timestamp = newTimestamp;
                 Debug.Log($"[CardRegistry] Load: Loaded {dict.Count} cards");
             }
             else

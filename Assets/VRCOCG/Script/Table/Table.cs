@@ -10,10 +10,6 @@ namespace VRCOCG
     public class Table : UdonSharpBehaviour
     {
         public CardPool cardPool;
-
-        // void Start()
-        // {
-
-        // }
+        public string uid;
     }
 }

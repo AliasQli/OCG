@@ -23,7 +23,7 @@ namespace VRCOCG
         {
             if (collidingStackInserter != null)
             {
-                collidingStackInserter.renderer.material = collidingStackInserter.material;
+                collidingStackInserter.renderer.materials = collidingStackInserter.materials;
                 collidingStackInserter = null;
             }
             fromStack = null;
@@ -39,34 +39,46 @@ namespace VRCOCG
 
         public override void OnDrop()
         {
-            Debug.Log($"[CardUX] Dropped card {card.code}, {collidingStackInserter} {fromStack}");
+            Debug.Log($"[CardUX] Dropped card: uid = {card.uid}, code = {card.code}, colliding = {collidingStackInserter}, from = {fromStack}");
             if (collidingStackInserter == null)
-            {
-                card.ConfirmMove();
-                if (fromStack != null)
-                {
-                    fromStack.TryRemoveCard(card.code);
-                    fromStack = null;
-                }
-                return;
-            }
-            if (collidingStackInserter.stack != fromStack)
             {
                 if (fromStack != null)
                 {
                     if (fromStack.TryRemoveCard(card.code))
                     {
-                        collidingStackInserter.stack.AddCard(card.code, collidingStackInserter.position);
+                        card.ConfirmMove();
                     }
+                    else
+                    {
+                        card.Remove();
+                    }
+                    fromStack = null;
+                }
+                else
+                {
+                    card.ConfirmMove();
+                }
+            }
+            else
+            {
+                if (fromStack != null)
+                {
+                    if (collidingStackInserter.stack != fromStack)
+                    {
+                        if (fromStack.TryRemoveCard(card.code))
+                        {
+                            collidingStackInserter.stack.AddCard(card.code, collidingStackInserter.position);
+                        }
+                    }
+                    fromStack = null;
                 }
                 else
                 {
                     collidingStackInserter.stack.AddCard(card.code, collidingStackInserter.position);
                 }
+                collidingStackInserter.renderer.materials = collidingStackInserter.materials;
+                card.Remove();
             }
-            fromStack = null;
-            collidingStackInserter.renderer.material = collidingStackInserter.material;
-            card.Remove();
         }
     }
 }

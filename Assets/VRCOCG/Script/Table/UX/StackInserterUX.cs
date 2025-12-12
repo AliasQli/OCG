@@ -6,10 +6,13 @@ using UnityEngine;
 
 namespace VRCOCG
 {
+    [RequireComponent(typeof(Renderer))]
+
     public class StackInserterUX : UdonSharpBehaviour
     {
-        [NotNull] public Material material;
         [NotNull] public Material collideMaterial;
+        [NonSerialized, NotNull] public Material[] materials;
+        [NonSerialized, NotNull] public Material[] collideMaterials;
         [NonSerialized, NotNull] public new Renderer renderer;
         [NotNull] public Stack stack;
         [NotNull] private Side side;
@@ -23,6 +26,12 @@ namespace VRCOCG
             {
                 position = stack.DefaultPosition();
             }
+            materials = renderer.materials;
+            collideMaterials = new Material[materials.Length];
+            for (int i = 0; i < materials.Length; i++)
+            {
+                collideMaterials[i] = collideMaterial;
+            }
         }
 
         void OnTriggerEnter([NotNull] Collider other)
@@ -32,7 +41,7 @@ namespace VRCOCG
             if (cardUX == null) return;
             if (cardUX.card.side != side) return;
             if (cardUX.collidingStackInserter != null) return;
-            renderer.material = collideMaterial;
+            renderer.materials = collideMaterials;
             cardUX.collidingStackInserter = this;
         }
 
@@ -43,7 +52,7 @@ namespace VRCOCG
             if (cardUX == null) return;
             if (cardUX.card.side != side) return;
             if (cardUX.collidingStackInserter != this) return;
-            renderer.material = material;
+            renderer.materials = materials;
             cardUX.collidingStackInserter = null;
         }
     }

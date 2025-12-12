@@ -203,6 +203,7 @@ public class DataCenter : UdonSharpBehaviour
     public const int TYPE_PENDULUM = 0x1000000;
     public const int TYPE_SPSUMMON = 0x2000000;
     public const int TYPE_LINK = 0x4000000;
+    public const int TYPE_EXTRA = TYPE_FUSION | TYPE_SYNCHRO | TYPE_XYZ | TYPE_LINK;
 
     static public string GetSpellTrapString(int type)
     {
@@ -219,7 +220,7 @@ public class DataCenter : UdonSharpBehaviour
 
     static public string GetMonsterString(int type, int race)
     {
-        if ((type & TYPE_MONSTER) != 0) return "";
+        if ((type & TYPE_MONSTER) == 0) return "";
 
         StringBuilder result = new StringBuilder("【");
         result.Append(GetRaceName(race));
@@ -242,6 +243,12 @@ public class DataCenter : UdonSharpBehaviour
         else if ((type & TYPE_NORMAL) != 0) result.Append("/通常");
         result.Append("】");
         return result.ToString();
+    }
+
+    static public string GetDescCompact(int type, string desc)
+    {
+        // return desc.Replace("\r\n", "") ;
+        return desc;
     }
 
     //Attributes

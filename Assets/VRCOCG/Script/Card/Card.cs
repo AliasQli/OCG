@@ -40,7 +40,7 @@ namespace VRCOCG
         // public int rscale;
         // private DataDictionary data;
 
-        public long timestamp = DateTime.UtcNow.ToFileTimeUtc();
+        [NonSerialized] public long timestamp = 0;
 
         // void Start()
         // {
@@ -153,11 +153,11 @@ namespace VRCOCG
             if (isMonster)
             {
                 desc.text = DataCenter.GetMonsterString(type, data["race"].AsInt()) + "\n" + 
-                    text["desc"].String.Replace("\r\n", "");
+                    DataCenter.GetDescCompact(type, text["desc"].String);
             }
             else
             {
-                desc.text = text["desc"].String.Replace("\r\n", "");
+                desc.text = DataCenter.GetDescCompact(type, text["desc"].String);
             }
             password.text = code.ToString();
             if (isP)
@@ -185,7 +185,7 @@ namespace VRCOCG
                 {
                     def.gameObject.SetActive(false);
                     link.gameObject.SetActive(true);
-                    link.text = level.ToString();
+                    link.text = (data["level"].AsInt() & 0xF).ToString();
                 }
                 else
                 {
@@ -209,6 +209,7 @@ namespace VRCOCG
             else if (isLink)
             {
                 name.color = Color.white;
+                password.color = Color.black;
             }
             else
             {
@@ -218,7 +219,7 @@ namespace VRCOCG
             #endregion
         }
 
-        // Move has been down, this is just a confirmation (send sync event)
+        // Move has been done, this is just a confirmation (send sync event)
         public void ConfirmMove()
         {
             var t = gameObject.transform;

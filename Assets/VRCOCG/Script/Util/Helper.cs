@@ -1,20 +1,28 @@
 using System;
-using System.Text.RegularExpressions;
-using UnityEngine;
 using VRC.SDK3.Data;
 
 namespace VRCOCG
 {
     static public class Helper
     {
-        static public string GenerateId(string s)
+        static public string GenerateId(string s, int i = 0)
         {
-            return string.Format("{0}{1}{2}", s, DateTime.UtcNow.ToFileTimeUtc(), UnityEngine.Random.value);
+            return $"{s}_{DateTime.UtcNow.ToFileTimeUtc()}_{i + UnityEngine.Random.value}";
         }
 
         static public int AsInt(this DataToken token)
         {
             return (int)token.Number;
+        }
+
+        static public bool VerifyTimestamp(this ref long localTs, long ts)
+        {
+            if (localTs < ts && ts <= DateTime.UtcNow.ToFileTimeUtc())
+            {
+                localTs = ts;
+                return true;
+            }
+            return false;
         }
 
         // static public DataList DoubleListToIntList(this DataList arr)

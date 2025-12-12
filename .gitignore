@@ -111,7 +111,6 @@ PSD.meta
 
 /Assets/Suzyrg/FaceEmo
 /Assets/Suzyrg/FaceEmo.meta
-!/[Aa]ssets/**/*.meta
 [Aa]ssets/SerializedUdonPrograms/
 [Aa]ssets/UdonSharp/
 [Aa]ssets/TextMesh Pro/

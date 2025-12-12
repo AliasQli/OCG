@@ -20,7 +20,7 @@ namespace VRCOCG
             buffer = new Card[bufferLimit];
         }
 
-        public Card New(int code, Side side)
+        public Card New(int code, string uid, Side side)
         {
             Card card;
             if (index > 0)
@@ -34,9 +34,12 @@ namespace VRCOCG
             }
             // Init
             card.gameObject.SetActive(true);
+            var scale = side.scale;
+            card.transform.localScale = new Vector3(scale, scale, scale);
             card.Thaw();
-            card.timestamp = DateTime.UtcNow.ToFileTimeUtc();
+            card.timestamp = 0;
             card.dataCenter = dataCenter;
+            card.uid = uid;
             card.side = side;
             card.SetCard(code);
             return card;
