@@ -1,1 +1,3 @@
-# tech.qliphoth.vrcocg by AliasQli
+# VRCOCG
+
+See https://github.com/AliasQli/VRCOCG.

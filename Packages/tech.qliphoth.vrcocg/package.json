@@ -1,8 +1,17 @@
 {
   "name": "tech.qliphoth.vrcocg",
-  "displayName": "tech.qliphoth.vrcocg",
-  "version": "0.1.0",
+  "displayName": "VRCOCG",
+  "version": "0.1.1",
   "description": "Yu-Gi-Oh OCG prefab (alpha)",
+  "unity": "2022.3",
+  "keywords": [
+    "vrchat",
+    "yugioh",
+    "ocg"
+  ],
+  "license": "AGPL-3.0-or-later",
+  "licensesUrl": "https://www.gnu.org/licenses/agpl-3.0.txt",
+  "documentationUrl": "https://github.com/AliasQli/VRCOCG",
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.worlds": "3.10.1"

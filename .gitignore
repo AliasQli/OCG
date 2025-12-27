@@ -109,6 +109,8 @@ PSD/
 PSD.meta
 *.psd
 *.psd.meta
+*.zip
+*.zip.meta
 
 /Assets/Suzyrg/FaceEmo
 /Assets/Suzyrg/FaceEmo.meta
