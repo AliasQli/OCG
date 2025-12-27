@@ -1,0 +1,17 @@
+{
+  "name": "tech.qliphoth.vrcocg",
+  "displayName": "tech.qliphoth.vrcocg",
+  "version": "0.1.0",
+  "description": "Describe this Package",
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.worlds": "3.10.1"
+  },
+  "author": {
+    "name": "AliasQli",
+    "email": "aliasqli@qq.com"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "localPath": "C:\\Users\\AliasQli\\Documents\\VRCProj\\world\\OCG\\Packages\\tech.qliphoth.vrcocg"
+}

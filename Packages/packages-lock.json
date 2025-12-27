@@ -250,6 +250,14 @@
         "com.unity.ugui": "1.0.0"
       }
     },
+    "com.vrchat.core.vpm-resolver": {
+      "version": "file:com.vrchat.core.vpm-resolver",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      }
+    },
     "com.vrchat.worlds": {
       "version": "file:com.vrchat.worlds",
       "depth": 0,
@@ -263,6 +271,12 @@
     },
     "jp.lilxyzw.liltoon": {
       "version": "file:jp.lilxyzw.liltoon",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "tech.qliphoth.vrcocg": {
+      "version": "file:tech.qliphoth.vrcocg",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

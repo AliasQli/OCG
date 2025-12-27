@@ -1,0 +1,57 @@
+{
+  "dependencies": {
+    "com.vrchat.worlds": {
+      "version": "3.9.0"
+    },
+    "xyz.misakal.vpm.vcm-connect": {
+      "version": "0.1.3"
+    },
+    "xyz.misakal.vpm.vcm-connect.worlds": {
+      "version": "0.1.0"
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "2.3.2"
+    },
+    "com.vrchat.core.vpm-resolver": {
+      "version": "0.1.29"
+    }
+  },
+  "locked": {
+    "com.vrchat.base": {
+      "version": "3.9.0",
+      "dependencies": {}
+    },
+    "com.vrchat.worlds": {
+      "version": "3.9.0",
+      "dependencies": {
+        "com.vrchat.base": "3.9.0"
+      }
+    },
+    "xyz.misakal.vpm.vcm-connect": {
+      "version": "0.2.0",
+      "dependencies": {
+        "com.vrchat.base": "^3.7.0",
+        "xyz.misakal.vpm.yes-patch-framework-for-sdk": "^0.2.0-beta.2"
+      }
+    },
+    "xyz.misakal.vpm.vcm-connect.worlds": {
+      "version": "0.2.0",
+      "dependencies": {
+        "com.vrchat.worlds": "^3.7.0",
+        "xyz.misakal.vpm.vcm-connect": "^0.2.0-beta.2"
+      }
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "2.3.2",
+      "dependencies": {}
+    },
+    "xyz.misakal.vpm.yes-patch-framework-for-sdk": {
+      "version": "0.2.0",
+      "dependencies": {}
+    },
+    "com.vrchat.core.vpm-resolver": {
+      "version": "0.1.29",
+      "dependencies": {}
+    }
+  }
+}

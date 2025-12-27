@@ -15,7 +15,8 @@
 /[Pp]ackages/*
 !/[Pp]ackages/manifest.json
 !/[Pp]ackages/packages-lock.json
-!/[Pp]Packages/vpm-manifest.json
+!/[Pp]ackages/vpm-manifest.json
+!tech.qliphoth.vrcocg
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
