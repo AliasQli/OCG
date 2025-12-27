@@ -2,7 +2,7 @@
   "name": "tech.qliphoth.vrcocg",
   "displayName": "tech.qliphoth.vrcocg",
   "version": "0.1.0",
-  "description": "Describe this Package",
+  "description": "Yu-Gi-Oh OCG prefab (alpha)",
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.worlds": "3.10.1"
@@ -12,6 +12,5 @@
     "email": "aliasqli@qq.com"
   },
   "legacyFolders": {},
-  "legacyFiles": {},
-  "localPath": "C:\\Users\\AliasQli\\Documents\\VRCProj\\world\\OCG\\Packages\\tech.qliphoth.vrcocg"
+  "legacyFiles": {}
 }
