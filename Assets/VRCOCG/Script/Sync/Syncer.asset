@@ -18,7 +18,7 @@ MonoBehaviour:
   sourceCsScript: {fileID: 11500000, guid: 42f8ac3892d8a474cb4c0184c22320bc, type: 3}
   scriptVersion: 2
   compiledVersion: 2
-  behaviourSyncMode: 0
+  behaviourSyncMode: 1
   hasInteractEvent: 0
   scriptID: -1321759336308074598
   serializationData:
@@ -187,7 +187,7 @@ MonoBehaviour:
       Data: 12|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: LatejoinReceiver, Assembly-CSharp
+      Data: VRCOCG.LatejoinReceiver, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

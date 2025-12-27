@@ -6,6 +6,7 @@ using VRC.SDK3.UdonNetworkCalling;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class CardRegistry : UdonSharpBehaviour
     {
         [NonSerialized] public DataDictionary dict = new DataDictionary();
@@ -54,7 +55,7 @@ namespace VRCOCG
                 data.TryGetValue("cards", TokenType.DataDictionary, out DataToken cardsToken))
             {
                 long newTimestamp = long.Parse(tsToken.String);
-                if (!timestamp.VerifyTimestamp(newTimestamp)) return;
+                if (!timestamp.VerifyTimestamp(newTimestamp, "CardRegistry > Deserialize")) return;
 
                 var cardsDict = cardsToken.DataDictionary;
                 var keys = cardsDict.GetKeys();
@@ -63,7 +64,7 @@ namespace VRCOCG
                     var key = keys[i].String;
                     var cardData = cardsDict[key].DataDictionary;
                     string uid = cardData["uid"].String;
-                    int code = cardData["code"].AsInt();
+                    double code = cardData["code"].Number;
                     long cardTs = long.Parse(cardData["ts"].String);
                     var card = GetOrNew(uid, code);
                     if (!card.timestamp.VerifyTimestamp(cardTs)) continue;
@@ -91,33 +92,49 @@ namespace VRCOCG
             }
         }
 
-        public Card GetOrNew(string uid, int code)
+        public Card GetOrNew(string uid, double code)
         {
             var card = TryGet(uid);
             if (card == null)
             {
                 card = pool.New(code, uid, side);
                 dict.Add(uid, card);
-                timestamp = DateTime.UtcNow.ToFileTimeUtc();
+                timestamp = Helper.GetTimestamp();
             }
             return card;
         }
 
-        public Card New(int code, int i = 0)
+        public Card New(double code, int i = 0)
         {
             string uid = Helper.GenerateId(pool.prefab.name, i);
             var card = pool.New(code, uid, side);
-            card.timestamp = DateTime.UtcNow.ToFileTimeUtc();
+            card.timestamp = Helper.GetTimestamp();
             dict.Add(uid, card);
-            timestamp = DateTime.UtcNow.ToFileTimeUtc();
+            timestamp = Helper.GetTimestamp();
             return card;
+        }
+
+        public void Transfer(string uid, CardRegistry newRegistry)
+        {
+            var card = TryGet(uid);
+            if (card != null)
+            {
+                dict.Remove(uid);
+                newRegistry.dict.Add(uid, card);
+                timestamp = Helper.GetTimestamp();
+                newRegistry.timestamp = timestamp;
+            }
+            else
+            {
+                Debug.LogWarning($"[CardRegistry] Transfer: Card {uid} not found");
+            }
         }
 
         public void Unregister(Card card)
         {
             if (dict.Remove(card.uid))
             {
-                timestamp = DateTime.UtcNow.ToFileTimeUtc();
+                timestamp = Helper.GetTimestamp();
             }
             else
             {
@@ -125,13 +142,14 @@ namespace VRCOCG
             }
             pool.Recycle(card);
         }
+
         public void UnregisterByUid(string uid)
         {
             if (dict.TryGetValue(uid, TokenType.Reference, out DataToken card))
             {
                 dict.Remove(uid);
                 pool.Recycle((Card)card.Reference);
-                timestamp = DateTime.UtcNow.ToFileTimeUtc();
+                timestamp = Helper.GetTimestamp();
                 return;
             }
             else
@@ -140,10 +158,8 @@ namespace VRCOCG
             }
         }
 
-        [NetworkCallable]
-        public void UnregisterAll(long newTimestamp)
+        public void UnregisterAll()
         {
-            if (!timestamp.VerifyTimestamp(newTimestamp)) return;
             var cards = dict.GetValues();
             Debug.Log($"[CardRegistry] UnregisterAll (has {cards.Count})");
             for (int i = 0; i < cards.Count; i++)
@@ -153,19 +169,32 @@ namespace VRCOCG
             dict = new DataDictionary();
         }
 
-        public void Load(string json, long newTimestamp)
+        public void ForceUnregisterAll(long newTimestamp)
         {
-            if (VRCJson.TryDeserializeFromJson(json, out var newDict))
-            {
-                if (!timestamp.VerifyTimestamp(newTimestamp)) return;
-                dict = newDict.DataDictionary;
-                Debug.Log($"[CardRegistry] Load: Loaded {dict.Count} cards");
-            }
-            else
-            {
-                Debug.LogError("[CardRegistry] Load: Failed to deserialize JSON");
-            }
+            timestamp = newTimestamp;
+            UnregisterAll();
         }
+
+        // [NetworkCallable]
+        // public void ClearEvent(long newTimestamp)
+        // {
+        //     if (!timestamp.VerifyTimestamp(newTimestamp, "CardRegistry > ClearEvent")) return;
+        //     UnregisterAll();
+        // }
+
+        // public void Load(long newTimestamp, string json)
+        // {
+        //     if (VRCJson.TryDeserializeFromJson(json, out var newDict))
+        //     {
+        //         if (!timestamp.VerifyTimestamp(newTimestamp, "CardRegistry > Load")) return;
+        //         dict = newDict.DataDictionary;
+        //         Debug.Log($"[CardRegistry] Load: Loaded {dict.Count} cards");
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError("[CardRegistry] Load: Failed to deserialize JSON");
+        //     }
+        // }
 
         // Nullable
         public Card TryGet(string uid)

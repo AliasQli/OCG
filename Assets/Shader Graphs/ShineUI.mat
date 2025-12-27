@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShineUI
+  m_Shader: {fileID: 4800000, guid: daa5d1a4c3e43654f93d2653e632ad78, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AttributeTex:
+        m_Texture: {fileID: 2800000, guid: 769ee77747eff9b4e9f28d5fb2fbcdd4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FrameMask:
+        m_Texture: {fileID: 2800000, guid: 08e175b78b408f9499bff5382010e037, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HoloTex:
+        m_Texture: {fileID: 2800000, guid: c6d7d9ea90d057a41b3f85ac72766aee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _KiraColorTexture:
+        m_Texture: {fileID: 2800000, guid: e179499aecdf74d4b8f777bd628485ef, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _KiraMask:
+        m_Texture: {fileID: 2800000, guid: a7347f4a2c78e7245accb8b2f3012791, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _KiraNormal01:
+        m_Texture: {fileID: 2800000, guid: ce15c0ef7f472e84baa1e85e79698892, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LoadingTex:
+        m_Texture: {fileID: 2800000, guid: 76818dc17c8f15040a597e6a095a5213, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainNormal:
+        m_Texture: {fileID: 2800000, guid: fb7b996b1a543044f973724b4d7fa36f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 76818dc17c8f15040a597e6a095a5213, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MonsterNameTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_90c6e35ef4304f289c279037152a03b7_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 687a7b19bab369d4c8f18a5726c4fac9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AttributeTile: 0
+    - _BumpScale: 1
+    - _CardDistortion: 0
+    - _ColorMask: 15
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DirectionalLightAmp: 0.88
+    - _DstBlend: 0
+    - _EnhanceColorThreshold: 2
+    - _EnvironmentPower: 1
+    - _FakeBlend: 1
+    - _FrameMetal: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _HighlightAmp: 1
+    - _HighlightRotation: -30
+    - _HighlightScrollOffset: 0
+    - _HoloBrightness: 0.7
+    - _HoloShift: 1
+    - _IllustBrightness: -0.2
+    - _IllustContrast: 1.3
+    - _IllustHoloPower: 1
+    - _IllustRanbowPower: 2
+    - _Kira01Tile: 1
+    - _Kira02Tile: 1
+    - _KiraMetal: 1
+    - _KiraNormal01Power: 0.4
+    - _KiraNormal02Power: 0.4
+    - _LinkOn_Off: 0
+    - _LoadingBlend: 0
+    - _MainNormalPower: 0.86
+    - _MainTexMetal: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _Monochrome: 0
+    - _MonsterNameTextBold: 1.3
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    - _ScrollSpeed: 1.5
+    - _Smoothness: 0.5
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UIMaskSoftnessX: 1
+    - _UIMaskSoftnessY: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    - _isFade: 0
+    m_Colors:
+    - _AddColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _AmbientColor: {r: 0.5707547, g: 0.5707547, b: 0.5707547, a: 1}
+    - _AttributeSize_Pos: {r: 9.85, g: 13.9, b: -3.7, a: -5.81}
+    - _CardNameColor: {r: 1, g: 1, b: 1, a: 0}
+    - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EnvironmentColor: {r: 1, g: 1, b: 1, a: 0}
+    - _FakeLightColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FakeLightDirection: {r: 0.75, g: -0.75, b: 0, a: 0}
+    - _FakeNormalDirection: {r: 0.75, g: -0.75, b: 0, a: 0}
+    - _FakeViewDirection: {r: 0.75, g: 0.75, b: 0, a: 0}
+    - _KiraColor: {r: 0.3764706, g: 0.4, b: 0.5568628, a: 0}
+    - _SpecularColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

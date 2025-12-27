@@ -10,6 +10,7 @@ using VRC.Udon;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ParserUX : UdonSharpBehaviour
     {
         public TMP_InputField field;
@@ -30,7 +31,7 @@ namespace VRCOCG
                         Debug.LogError($"code {code} not exist");
                         return null;
                     }
-                    d.Add(i);
+                    d.Add((double)i);
                 }
                 else
                 {

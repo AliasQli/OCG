@@ -7,6 +7,7 @@ using VRC.Udon.Common.Interfaces;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Syncer : UdonSharpBehaviour
     {
         [NonSerialized] public Side[] sides;
@@ -33,11 +34,11 @@ namespace VRCOCG
             for (int i = 0; i < sides.Length; i++)
             {
                 var side = sides[i];
-                data[side.uid] = side.Serialize();
+                data[side.uid] = side.SerializeAll();
             }
             if(!VRCJson.TrySerializeToJson(data, JsonExportType.Minify, out var json))
             {
-                Debug.LogError("[Syncer] Failed to serialize data to JSON");
+                Debug.LogError($"[Syncer] Failed to serialize data to JSON: {json.Error}");
                 return;
             }
             receiver.SendCustomNetworkEvent(NetworkEventTarget.Owner, nameof(LatejoinReceiver.SyncLatejoin), json.String);

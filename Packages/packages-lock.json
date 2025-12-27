@@ -261,6 +261,12 @@
         "com.unity.ai.navigation": "1.1.5"
       }
     },
+    "jp.lilxyzw.liltoon": {
+      "version": "file:jp.lilxyzw.liltoon",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "xyz.misakal.vpm.vcm-connect": {
       "version": "file:xyz.misakal.vpm.vcm-connect",
       "depth": 0,
@@ -269,6 +275,12 @@
     },
     "xyz.misakal.vpm.vcm-connect.worlds": {
       "version": "file:xyz.misakal.vpm.vcm-connect.worlds",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "xyz.misakal.vpm.yes-patch-framework-for-sdk": {
+      "version": "file:xyz.misakal.vpm.yes-patch-framework-for-sdk",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

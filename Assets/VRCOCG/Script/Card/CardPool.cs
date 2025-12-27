@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class CardPool : UdonSharpBehaviour
     {
         public GameObject prefab;
@@ -20,7 +21,7 @@ namespace VRCOCG
             buffer = new Card[bufferLimit];
         }
 
-        public Card New(int code, string uid, Side side)
+        public Card New(double code, string uid, Side side)
         {
             Card card;
             if (index > 0)
@@ -30,14 +31,13 @@ namespace VRCOCG
             }
             else
             {
-                card = Instantiate(prefab, gameObject.transform, true).GetComponent<Card>();
+                card = Instantiate(prefab, transform, true).GetComponent<Card>();
             }
             // Init
             card.gameObject.SetActive(true);
             var scale = side.scale;
             card.transform.localScale = new Vector3(scale, scale, scale);
-            card.Thaw();
-            card.timestamp = 0;
+            card.Init();
             card.dataCenter = dataCenter;
             card.uid = uid;
             card.side = side;
@@ -47,7 +47,7 @@ namespace VRCOCG
 
         public void Recycle(Card card)
         {
-            card.Freeze();
+            card.Uninit();
             if (index < bufferLimit)
             {
                 card.gameObject.SetActive(false);
@@ -64,7 +64,7 @@ namespace VRCOCG
         {
             if (index < bufferDanger)
             {
-                var obj = Instantiate(prefab, gameObject.transform, true);
+                var obj = Instantiate(prefab, transform, true);
                 obj.SetActive(false);
                 buffer[index] = obj.GetComponent<Card>();
                 index++;

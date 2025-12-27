@@ -18,7 +18,7 @@ MonoBehaviour:
   sourceCsScript: {fileID: 11500000, guid: e49242ecac14d2a41aa577338a08a9e7, type: 3}
   scriptVersion: 2
   compiledVersion: 2
-  behaviourSyncMode: 0
+  behaviourSyncMode: 1
   hasInteractEvent: 0
   scriptID: 2993273753975834154
   serializationData:
@@ -175,7 +175,7 @@ MonoBehaviour:
       Data: 10|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: System.Int32, mscorlib
+      Data: System.Double, mscorlib
     - Name: 
       Entry: 8
       Data: 
@@ -217,19 +217,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: mat
+      Data: renderer
     - Name: $v
       Entry: 7
       Data: 12|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: mat
+      Data: renderer
     - Name: <UserType>k__BackingField
       Entry: 7
       Data: 13|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UnityEngine.Material, UnityEngine.CoreModule
+      Data: UnityEngine.Renderer, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
@@ -775,7 +775,7 @@ MonoBehaviour:
       Data: 38|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DataCenter, Assembly-CSharp
+      Data: VRCOCG.DataCenter, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

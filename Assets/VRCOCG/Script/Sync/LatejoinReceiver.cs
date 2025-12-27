@@ -4,49 +4,53 @@ using VRC.SDK3.Data;
 using VRC.SDK3.UdonNetworkCalling;
 using VRCOCG;
 
-public class LatejoinReceiver : UdonSharpBehaviour
+namespace VRCOCG
 {
-    private Syncer syncer;
-    private DataDictionary sides;
-    void Start()
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    public class LatejoinReceiver : UdonSharpBehaviour
     {
-        syncer = GetComponentInParent<Syncer>();
-        SendCustomEventDelayedFrames(nameof(Start1), 1);
-    }
-
-    public void Start1()
-    {
-        sides = new DataDictionary();
-        for (int i = 0; i < syncer.sides.Length; i++)
+        private Syncer syncer;
+        private DataDictionary sides;
+        void Start()
         {
-            var side = syncer.sides[i];
-            sides[side.uid] = side;
+            syncer = GetComponentInParent<Syncer>();
+            SendCustomEventDelayedFrames(nameof(DelayedStart), 1);
         }
-    }
 
-    [NetworkCallable]
-    public void SyncLatejoin(string json)
-    {
-        Debug.Log($"[LatejoinReceiver] SyncLatejoin: {json}");
-        if(!VRCJson.TryDeserializeFromJson(json, out var dataToken))
+        public void DelayedStart()
         {
-            Debug.LogError("[LatejoinReceiver] Failed to deserialize JSON");
-            return;
+            sides = new DataDictionary();
+            for (int i = 0; i < syncer.sides.Length; i++)
+            {
+                var side = syncer.sides[i];
+                sides[side.uid] = side;
+            }
         }
-        var data = dataToken.DataDictionary;
-        var keys = data.GetKeys();
-        for (int i = 0; i < keys.Count; i++)
-        {
-            var uid = keys[i];
-            var side = (Side)sides[uid].Reference;
-            var sideData = data[uid].DataDictionary;
-            side.Deserialize(sideData);
-        }
-        SendCustomEventDelayedSeconds(nameof(SetReady), 10f);
-    }
 
-    public void SetReady()
-    {
-        syncer.ready = true;
+        [NetworkCallable]
+        public void SyncLatejoin(string json)
+        {
+            Debug.Log($"[LatejoinReceiver] SyncLatejoin: {json}");
+            if(!VRCJson.TryDeserializeFromJson(json, out var dataToken))
+            {
+                Debug.LogError($"[LatejoinReceiver] Failed to deserialize JSON: {dataToken.Error}");
+                return;
+            }
+            var data = dataToken.DataDictionary;
+            var keys = data.GetKeys();
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var uid = keys[i];
+                var side = (Side)sides[uid].Reference;
+                var sideData = data[uid].DataDictionary;
+                side.DeserializeAll(sideData);
+            }
+            SendCustomEventDelayedSeconds(nameof(SetReady), 10f);
+        }
+
+        public void SetReady()
+        {
+            syncer.ready = true;
+        }
     }
 }

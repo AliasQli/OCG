@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048454486078031072}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7901418594102798842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &3401235032303020187
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -54,6 +54,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cdeccbd4205fd544ba7619cc82e1ff6f, type: 2}
+  - {fileID: 2100000, guid: 405f6f0a87a003945aacf56fecf6f391, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,7 +110,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115611465139191865}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.00005, y: 0.00005, z: 1}
   m_ConstrainProportionsScale: 0
@@ -124,10 +125,10 @@ RectTransform:
   - {fileID: 8637836827982394552}
   - {fileID: 1184526808340811592}
   m_Father: {fileID: 7901418594102798842}
-  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.000001}
+  m_AnchoredPosition: {x: 0, y: 0.00005}
   m_SizeDelta: {x: 2000, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3318549177998737237
@@ -293,7 +294,7 @@ MonoBehaviour:
   m_fontSizeMax: 144
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -873,12 +874,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7901418594102798842}
   - component: {fileID: 4361860731015565075}
-  - component: {fileID: 8365490324863197830}
-  - component: {fileID: 3318730886540497645}
-  - component: {fileID: 5915491499429570297}
-  - component: {fileID: 4810310885484284389}
-  - component: {fileID: 3897654523134302326}
   - component: {fileID: 1736669783901260161}
+  - component: {fileID: 8365490324863197830}
+  - component: {fileID: 4810310885484284389}
+  - component: {fileID: 7522360775502521215}
+  - component: {fileID: 3897654523134302326}
+  - component: {fileID: 2936641156199806229}
   m_Layer: 13
   m_Name: Card
   m_TagString: Untagged
@@ -930,6 +931,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1736669783901260161
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313524418631167583}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.059, y: 0.000000015401572, z: 0.086}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8365490324863197830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +970,7 @@ MonoBehaviour:
   ExactGrip: {fileID: 0}
   allowManipulationWhenEquipped: 0
   orientation: 0
-  AutoHold: 0
+  AutoHold: 2
   InteractionText: Pick
   UseText: Use
   useEventBroadcastType: 0
@@ -963,56 +985,6 @@ MonoBehaviour:
   pickupable: 1
   proximity: 2
   version: 1
---- !u!114 &3318730886540497645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4313524418631167583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: 440ee238edac3764aa4a624526161ff8, type: 2}
-  programSource: {fileID: 11400000, guid: 9c217df23698ff845b9ac128a7a3bba6, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
---- !u!114 &5915491499429570297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4313524418631167583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d14e03f4447084a409a2b99b2f774698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 3318730886540497645}
-  card: {fileID: 4810310885484284389}
-  fromStack: {fileID: 0}
-  collidingStackInserter: {fileID: 0}
 --- !u!114 &4810310885484284389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,7 +998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -1035,7 +1007,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 3897654523134302326}
-  cardUX: {fileID: 5915491499429570297}
+  cardUX: {fileID: 7522360775502521215}
   uid: 
   code: 0
   name: {fileID: 5903732690318803634}
@@ -1049,6 +1021,29 @@ MonoBehaviour:
   password: {fileID: 6496792793482515485}
   side: {fileID: 0}
   dataCenter: {fileID: 0}
+--- !u!114 &7522360775502521215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313524418631167583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14e03f4447084a409a2b99b2f774698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  _udonSharpBackingUdonBehaviour: {fileID: 2936641156199806229}
+  card: {fileID: 4810310885484284389}
 --- !u!114 &3897654523134302326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,27 +1069,31 @@ MonoBehaviour:
   serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
   publicVariablesUnityEngineObjects: []
   publicVariablesSerializationDataFormat: 0
---- !u!65 &1736669783901260161
-BoxCollider:
+--- !u!114 &2936641156199806229
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4313524418631167583}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.059, y: 0.000000015401572, z: 0.086}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactTextPlacement: {fileID: 0}
+  interactText: Use
+  interactTextGO: {fileID: 0}
+  proximity: 2
+  SynchronizePosition: 0
+  AllowCollisionOwnershipTransfer: 0
+  Reliable: 0
+  _syncMethod: 1
+  serializedProgramAsset: {fileID: 11400000, guid: 440ee238edac3764aa4a624526161ff8, type: 2}
+  programSource: {fileID: 11400000, guid: 9c217df23698ff845b9ac128a7a3bba6, type: 2}
+  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
+  publicVariablesUnityEngineObjects: []
+  publicVariablesSerializationDataFormat: 0
 --- !u!1 &5309550233908580368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,7 +1293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3010\u673A\u68B0\u65CF/\u6548\u679C/\u7075\u6446\u3011\n\u2460\uFF1A\u8FD9\u5F20\u5361\u53EF\u4EE5\u4E0D\u7528\u89E3\u653E\u4F5C\u53EC\u5524\u3002\u2461\uFF1A\u7279\u6B8A\u53EC\u5524\u6216\u8005\u4E0D\u7528\u89E3\u653E\u4F5C\u53EC\u5524\u7684\u8FD9\u5F20\u5361\u7684\u7B49\u7EA7\u53D8\u62104\u661F\uFF0C\u539F\u672C\u653B\u51FB\u529B\u53D8\u62101800\u3002\u2462\uFF1A\u901A\u5E38\u53EC\u5524\u7684\u8FD9\u5F20\u5361\u4E0D\u53D7\u539F\u672C\u7684\u7B49\u7EA7\u6216\u8005\u9636\u7EA7\u6BD4\u8FD9\u5F20\u5361\u7684\u7B49\u7EA7\u4F4E\u7684\u602A\u517D\u53D1\u52A8\u7684\u6548\u679C\u5F71\u54CD\u3002\u2463\uFF1A\u628A\u300C\u673A\u58F3\u300D\u602A\u517D\u89E3\u653E\u5BF9\u8FD9\u5F20\u5361\u7684\u4E0A\u7EA7\u53EC\u5524\u6210\u529F\u65F6\uFF0C\u4EE5\u573A\u4E0A1\u5F20\u5361\u4E3A\u5BF9\u8C61\u624D\u80FD\u53D1\u52A8\u3002\u90A3\u5F20\u5361\u56DE\u5230\u6301\u6709\u8005\u624B\u5361\u3002\u5BF9\u65B9\u4E0D\u80FD\u5BF9\u5E94\u8FD9\u4E2A\u6548\u679C\u7684\u53D1\u52A8\u628A\u9B54\u6CD5\xB7\u9677\u9631\xB7\u602A\u517D\u7684\u6548\u679C\u53D1\u52A8\u3002 "
+  m_text: "\u3010\u673A\u68B0\u65CF/\u6548\u679C/\u7075\u6446\u3011\n\u2460\uFF1A\u8FD9\u5F20\u5361\u53EF\u4EE5\u4E0D\u7528\u89E3\u653E\u4F5C\u53EC\u5524\u3002\n\u2461\uFF1A\u7279\u6B8A\u53EC\u5524\u6216\u8005\u4E0D\u7528\u89E3\u653E\u4F5C\u53EC\u5524\u7684\u8FD9\u5F20\u5361\u7684\u7B49\u7EA7\u53D8\u62104\u661F\uFF0C\u539F\u672C\u653B\u51FB\u529B\u53D8\u62101800\u3002\n\u2462\uFF1A\u901A\u5E38\u53EC\u5524\u7684\u8FD9\u5F20\u5361\u4E0D\u53D7\u539F\u672C\u7684\u7B49\u7EA7\u6216\u8005\u9636\u7EA7\u6BD4\u8FD9\u5F20\u5361\u7684\u7B49\u7EA7\u4F4E\u7684\u602A\u517D\u53D1\u52A8\u7684\u6548\u679C\u5F71\u54CD\u3002\n\u2463\uFF1A\u628A\u300C\u673A\u58F3\u300D\u602A\u517D\u89E3\u653E\u5BF9\u8FD9\u5F20\u5361\u7684\u4E0A\u7EA7\u53EC\u5524\u6210\u529F\u65F6\uFF0C\u4EE5\u573A\u4E0A1\u5F20\u5361\u4E3A\u5BF9\u8C61\u624D\u80FD\u53D1\u52A8\u3002\u90A3\u5F20\u5361\u56DE\u5230\u6301\u6709\u8005\u624B\u5361\u3002\u5BF9\u65B9\u4E0D\u80FD\u5BF9\u5E94\u8FD9\u4E2A\u6548\u679C\u7684\u53D1\u52A8\u628A\u9B54\u6CD5\xB7\u9677\u9631\xB7\u602A\u517D\u7684\u6548\u679C\u53D1\u52A8\u3002 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d5620985c81690341bfda11f336034d2, type: 2}
   m_sharedMaterial: {fileID: -5181080400684357575, guid: d5620985c81690341bfda11f336034d2, type: 2}
@@ -1321,7 +1320,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 29.6
   m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1562,7 +1561,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2460\uFF1A\u81EA\u5DF1\u4E0D\u662F\u300C\u673A\u58F3\u300D\u602A\u517D\u4E0D\u80FD\u7279\u6B8A\u53EC\u5524\u3002\u8FD9\u4E2A\u6548\u679C\u4E0D\u4F1A\u88AB\u65E0\u6548\u5316\u3002\u2461\uFF1A\u81EA\u5DF1\u573A\u4E0A\u7684\u300C\u673A\u58F3\u300D\u602A\u517D\u7684\u653B\u51FB\u529B\u4E0A\u5347300\u3002 "
+  m_text: "\u2460\uFF1A\u81EA\u5DF1\u4E0D\u662F\u300C\u673A\u58F3\u300D\u602A\u517D\u4E0D\u80FD\u7279\u6B8A\u53EC\u5524\u3002\u8FD9\u4E2A\u6548\u679C\u4E0D\u4F1A\u88AB\u65E0\u6548\u5316\u3002\n\u2461\uFF1A\u81EA\u5DF1\u573A\u4E0A\u7684\u300C\u673A\u58F3\u300D\u602A\u517D\u7684\u653B\u51FB\u529B\u4E0A\u5347300\u3002 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d5620985c81690341bfda11f336034d2, type: 2}
   m_sharedMaterial: {fileID: -5181080400684357575, guid: d5620985c81690341bfda11f336034d2, type: 2}

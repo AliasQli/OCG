@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using VRC.SDK3.Data;
 
 namespace VRCOCG
@@ -7,7 +8,8 @@ namespace VRCOCG
     {
         static public string GenerateId(string s, int i = 0)
         {
-            return $"{s}_{DateTime.UtcNow.ToFileTimeUtc()}_{i + UnityEngine.Random.value}";
+            // return $"{s}_{GetTimestamp()}_{i + UnityEngine.Random.value}";
+            return $"{s}_{Guid.NewGuid()}_{i}";
         }
 
         static public int AsInt(this DataToken token)
@@ -15,9 +17,17 @@ namespace VRCOCG
             return (int)token.Number;
         }
 
-        static public bool VerifyTimestamp(this ref long localTs, long ts)
+        static public long GetTimestamp()
         {
-            if (localTs < ts && ts <= DateTime.UtcNow.ToFileTimeUtc())
+            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
+
+        static public bool VerifyTimestamp(this ref long localTs, long ts, string debugTag = null)
+        {
+            var now = GetTimestamp();
+            if (debugTag != null) 
+                Debug.Log($"[{debugTag}] VerifyTimestamp: current ts={localTs}, new ts={ts}, now ts={now}");
+            if (localTs <= ts && ts <= now)
             {
                 localTs = ts;
                 return true;

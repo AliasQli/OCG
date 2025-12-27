@@ -7,6 +7,7 @@ using VRC.Udon;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class StackUX : UdonSharpBehaviour
     {
         public GameObject panel;
@@ -14,17 +15,15 @@ namespace VRCOCG
         // private Side side;
         private StackUX[] allStackUX;
         private CardRegistry cardRegistry;
-        private Card[] dispCards = new Card[0];
+        public CardRegistry localCardRegistry; // Not synced
 
         [SerializeField] private Transform DrawPos;
         [SerializeField] private Transform CardOffset;
         [SerializeField] private Transform BasePos;
-        [SerializeField] private Transform ForwardPos;
 
         private Vector3 drawPos;
-        private Vector3 forwardDir;
+        private Vector3 towardPlayerDir; // Towards the player
         private Quaternion originalPanelRot;
-        private readonly Quaternion cardRot = Quaternion.Euler(180, 180, 0);
 
         void Start()
         {
@@ -34,7 +33,7 @@ namespace VRCOCG
             cardRegistry = side.cardRegistry;
 
             drawPos = DrawPos.position;
-            forwardDir = ForwardPos.position - panel.transform.position;
+            towardPlayerDir = side.transform.rotation * -Vector3.forward;
             originalPanelRot = panel.transform.rotation;
         }
 
@@ -42,14 +41,12 @@ namespace VRCOCG
         {
             if (!panel.activeSelf) return;
             panel.SetActive(false);
-            foreach (var c in dispCards)
+            if (by != null)
             {
-                if (c != by)
-                {
-                    cardRegistry.Unregister(c);
-                }
+                localCardRegistry.Transfer(by.uid, cardRegistry);
             }
-            dispCards = new Card[0];
+            localCardRegistry.UnregisterAll();
+            InteractionText = "Open";
         }
 
         public override void Interact()
@@ -61,6 +58,7 @@ namespace VRCOCG
             }
 
             panel.SetActive(true);
+            InteractionText = "Close";
             for (int i = 0; i < allStackUX.Length; i++)
             {
                 if (allStackUX[i] != this)
@@ -70,7 +68,7 @@ namespace VRCOCG
             }
 
             var p = Networking.LocalPlayer.GetPosition() - panel.transform.position;
-            if (Vector3.Dot(forwardDir, p) >= 0)
+            if (Vector3.Dot(towardPlayerDir, p) >= 0)
             {
                 panel.transform.rotation = originalPanelRot;
             }
@@ -86,27 +84,29 @@ namespace VRCOCG
                 cards.Sort();
             }
             const int width = 12;
-            dispCards = new Card[cards.Count];
             var cardOffset = CardOffset.position - CardOffset.parent.position;
             var basePos = BasePos.position + cardOffset * 0.5f;
             for (int i = 0; i < cards.Count; i++)
             {
                 int w = i % width;
                 int h = i / width;
-                var card = cardRegistry.New(cards[i].AsInt(), i);
-                dispCards[i] = card;
+                var card = localCardRegistry.New(cards[i].Number, i);
                 var pos = basePos + new Vector3(w * cardOffset.x, h * cardOffset.y, 0);
-                card.gameObject.transform.SetPositionAndRotation(pos, cardRot * panel.transform.rotation);
+                card.gameObject.transform.SetPositionAndRotation(pos, panel.transform.rotation);
                 card.cardUX.fromStack = stack;
             }
         }
 
         void DrawFrom(int p)
         {
-            int code = stack.DrawCard(p);
-            if (code == -1) return;
+            double code = stack.DrawCard(p);
+            if (code < 0)
+            {
+                ClosePanel();
+                return;
+            }
             var card = cardRegistry.New(code);
-            card.gameObject.transform.SetPositionAndRotation(drawPos, cardRot * panel.transform.rotation);
+            card.gameObject.transform.SetPositionAndRotation(drawPos, panel.transform.rotation);
             card.ConfirmMove();
             ClosePanel();
         }
@@ -116,11 +116,11 @@ namespace VRCOCG
             var cardOffset = CardOffset.position - CardOffset.parent.position;
             for (int i = -2; i <= 2; i++)
             {
-                int code = stack.DrawCard(Stack.POS_TOP);
-                if (code == -1) return;
+                double code = stack.DrawCard(Stack.POS_TOP);
+                if (code < 0) break;
                 var card = cardRegistry.New(code);
                 var pos = drawPos + new Vector3(i * cardOffset.x, 0, 0);
-                card.transform.SetPositionAndRotation(pos, cardRot * panel.transform.rotation);
+                card.transform.SetPositionAndRotation(pos, panel.transform.rotation);
                 card.ConfirmMove();
             }
             

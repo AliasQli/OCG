@@ -2,17 +2,17 @@
 using TMPro;
 using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Data;
 using VRC.Udon.Common.Interfaces;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Card : UdonSharpBehaviour
     {
         public CardUX cardUX;
         public string uid;
-        public int code;
-        private Material mat;
+        public double code;
+        new private Renderer renderer;
         public new TMP_Text name;
         public TMP_Text desc;
         public TMP_Text pdesc;
@@ -42,20 +42,17 @@ namespace VRCOCG
 
         [NonSerialized] public long timestamp = 0;
 
-        // void Start()
-        // {
-        //     Thaw();
-        // }
+        void Start()
+        {
+            renderer = GetComponentInChildren<Renderer>();
+        }
 
-        // void OnDestroy()
-        // {
-        //     Freeze();
-        // }
-
-        public void SetCard(int c)
+        public void SetCard(double c)
         {
             code = c;
-            var d = dataCenter.Get(code);
+            renderer.sharedMaterial = dataCenter.GetMaterial((int)(c * 10) % 10);
+            Material mat = renderer.material;
+            var d = dataCenter.Get((int)code);
             if (d == null)
             {
                 Debug.LogError($"[Card] Data not found for code {code}");
@@ -223,33 +220,31 @@ namespace VRCOCG
         public void ConfirmMove()
         {
             var t = gameObject.transform;
-            timestamp = DateTime.UtcNow.ToFileTimeUtc();
+            timestamp = Helper.GetTimestamp();
             side.cardListener.SendCustomNetworkEvent(NetworkEventTarget.Others,
                 nameof(CardListener.SyncCardMove), timestamp, uid, code, t.position, t.rotation);
         }
 
         public void Remove()
         {
-            // There's a possibility that this gameobject is destroyed here
             side.cardListener.SendCustomNetworkEvent(NetworkEventTarget.All,
-                nameof(CardListener.SyncCardRemove), DateTime.UtcNow.ToFileTimeUtc(), uid);
+                nameof(CardListener.SyncCardRemove), Helper.GetTimestamp(), uid);
         }
 
-        public void Thaw()
+        public void Init()
         {
-            // create a unique one
-            mat = GetComponentInChildren<Renderer>().material;
-            var cardUX = GetComponentInChildren<CardUX>();
-            cardUX.Thaw();
+            timestamp = 0;
+            cardUX.Init();
         }
 
-        public void Freeze()
+        public void Uninit()
         {
-            if (mat != null && mat != GetComponentInChildren<Renderer>().sharedMaterial) // 
+            if (renderer.material != null && renderer.material != renderer.sharedMaterial)
             {
-                Destroy(mat);
+                Destroy(renderer.material);
             }
-            mat = null;
+            renderer.material = renderer.sharedMaterial;
+            cardUX.Uninit();
         }
     }
 }

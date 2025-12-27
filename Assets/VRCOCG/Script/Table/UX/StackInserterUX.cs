@@ -7,6 +7,8 @@ using UnityEngine;
 namespace VRCOCG
 {
     [RequireComponent(typeof(Renderer))]
+    [RequireComponent(typeof(Collider))]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 
     public class StackInserterUX : UdonSharpBehaviour
     {
@@ -14,12 +16,13 @@ namespace VRCOCG
         [NonSerialized, NotNull] public Material[] materials;
         [NonSerialized, NotNull] public Material[] collideMaterials;
         [NonSerialized, NotNull] public new Renderer renderer;
-        [NotNull] public Stack stack;
-        [NotNull] private Side side;
+        [NonSerialized, NotNull] public Stack stack;
+        [NonSerialized, NotNull] public Side side;
         public int position = -1;
 
         void Start()
         {
+            stack = GetComponentInParent<Stack>();
             side = GetComponentInParent<Side>();
             renderer = GetComponent<Renderer>();
             if (position == -1)
@@ -34,26 +37,14 @@ namespace VRCOCG
             }
         }
 
-        void OnTriggerEnter([NotNull] Collider other)
+        public void Collide()
         {
-            Debug.Log("[StackInserterUX] OnTriggerEnter");
-            var cardUX = other.GetComponent<CardUX>();
-            if (cardUX == null) return;
-            if (cardUX.card.side != side) return;
-            if (cardUX.collidingStackInserter != null) return;
             renderer.materials = collideMaterials;
-            cardUX.collidingStackInserter = this;
         }
 
-        void OnTriggerExit([NotNull] Collider other)
+        public void Uncollide()
         {
-            Debug.Log("[StackInserterUX] OnTriggerExit");
-            var cardUX = other.GetComponent<CardUX>();
-            if (cardUX == null) return;
-            if (cardUX.card.side != side) return;
-            if (cardUX.collidingStackInserter != this) return;
             renderer.materials = materials;
-            cardUX.collidingStackInserter = null;
         }
     }
 }

@@ -18,7 +18,7 @@ MonoBehaviour:
   sourceCsScript: {fileID: 11500000, guid: dfde76d299e85f748a2224c90145d0af, type: 3}
   scriptVersion: 2
   compiledVersion: 2
-  behaviourSyncMode: 0
+  behaviourSyncMode: 1
   hasInteractEvent: 0
   scriptID: 5826083802836774280
   serializationData:
@@ -115,7 +115,7 @@ MonoBehaviour:
       Data: 6|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DataCenter, Assembly-CSharp
+      Data: VRCOCG.DataCenter, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

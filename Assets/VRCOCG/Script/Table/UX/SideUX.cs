@@ -1,5 +1,7 @@
-﻿using UdonSharp;
+﻿using System;
+using UdonSharp;
 using UnityEngine;
+using VRC.SDK3.ClientSim;
 using VRC.SDK3.Components;
 using VRC.SDK3.Data;
 using VRC.SDK3.Persistence;
@@ -7,12 +9,30 @@ using VRC.SDKBase;
 
 namespace VRCOCG
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class SideUX : UdonSharpBehaviour
     {
-        public Side side;
+        Side side;
+        Table table;
+        public TMPro.TMP_Text ownerIdText;
 
-        public void OnLoadDeck()
+        void Start()
         {
+            table = GetComponentInParent<Table>();
+            side = GetComponentInParent<Side>();
+        }
+
+        public void OnReset()
+        {
+            // if (side.ownerId != Networking.LocalPlayer.playerId) return;
+            if (side.board.lp != 0) return;
+            table.Reset();
+        }
+
+        public void OnJoin()
+        {
+            Debug.Log($"[SideUX] OnJoin {side.uid} by {Networking.LocalPlayer.displayName}");
+            if (side.ownerId != -1) return;
             var json = PlayerData.GetString(Networking.LocalPlayer, "deck0");
             if (string.IsNullOrEmpty(json))
             {
@@ -23,21 +43,35 @@ namespace VRCOCG
             {
                 if (deck.TokenType == TokenType.DataList && deck.DataList.Count == 3)
                 {
-                    // But these are double[] !
                     DataList main = deck.DataList[0].DataList;
                     DataList extra = deck.DataList[1].DataList;
                     DataList sideDeck = deck.DataList[2].DataList;
-                    side.SetCards(main, extra, sideDeck);
-                    OnInit();
+                    side.JoinAndSetCards(main, extra, sideDeck);
+                    side.Init();
                     return;
                 }
             }
             Debug.LogError($"Invalid deck data {json}");
         }
 
-        public void OnInit()
+        public void OnLeave()
         {
-            side.Init();
+            if (side.ownerId != Networking.LocalPlayer.playerId) return;
+            side.Leave();
+        }
+
+        public void UpdateOwnerId()
+        {
+            Debug.Log($"[SideUX] UpdateOwnerId: {side.ownerId}");
+            var player = VRCPlayerApi.GetPlayerById(side.ownerId);
+            if (player != null)
+            {
+                ownerIdText.text = player.displayName;
+            }
+            else
+            {
+                ownerIdText.text = "No Player";
+            }
         }
     }
 }
